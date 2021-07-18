@@ -1,0 +1,19 @@
+nav {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+nav > h4 {
+  margin: 0 auto 0 0;
+  padding: 0.5rem 0.5rem;
+}
+a {
+  text-decoration: none;
+  padding: 0.5rem 0.5rem;
+}
+a:visited {
+  color: black;
+}
+a:firstchild {
+  color: rgb(197, 9, 9);
+}
