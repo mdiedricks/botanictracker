@@ -1,20 +1,48 @@
 import React, { useState, useEffect } from "react";
-// import axios from "axios";
+import axios from "axios";
+import "../App.css";
 
-const Home = () => {
-  const [plants, setPlants] = useState([1, 2, 3, 4, 5, 6, 7]);
-  // useEffect(() => {
-  //   getPlants();
-  // }, []);
+const Home = (props) => {
+  const [plants, setPlants] = useState([]);
 
-  function getPlants() {
-    // axios({
-    //   method: "get",
-    //   url: "http://localhost:9000/plant",
-    // })
-    //   .then((res) => res.text())
-    //   .then((res) => setPlants(res));
-  }
+  useEffect(() => {
+    if (!props.isLoggedIn) {
+      getPlants();
+    } else {
+      getPlants({ owner: props.user._id });
+    }
+  }, [props.isLoggedIn, props.user._id]);
+
+  const getPlants = async (userId) => {
+    let url = "https://botanictracker-api.herokuapp.com/plants";
+    if (userId) {
+      url = url + "?owner=" + userId.owner;
+    }
+    const response = await axios({
+      method: "get",
+      url: url,
+    });
+    setPlants(response.data);
+  };
+
+  const deletePlant = (id) => {
+    //TODO show delete modal
+    console.log(id);
+  };
+  const editPlant = (id) => {
+    //TODO show edit modal
+    console.log(id);
+  };
+
+  const plantsList = plants.map((plant) => (
+    <div key={plant._id} className="card">
+      <h3>{plant.name}</h3>
+      <p>{plant.species}</p>
+      <p>{plant.age}</p>
+      <button onClick={() => deletePlant(plant._id)}>x</button>
+      <button onClick={() => editPlant(plant._id)}>e</button>
+    </div>
+  ));
 
   return (
     <div>
@@ -23,12 +51,10 @@ const Home = () => {
       </section>
 
       <section className="hero">
-        <a href="/login">Login</a>
-      </section>
-
-      <section className="hero">
-        <h3>This weeks weather</h3>
-        <div>{plants}</div>
+        <h3>Your plants</h3>
+        <div className="plants">
+          <ul>{plantsList}</ul>
+        </div>
       </section>
     </div>
   );

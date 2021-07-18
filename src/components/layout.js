@@ -6,7 +6,7 @@ import "../App.css";
 function Layout({ children }) {
   return (
     <>
-      <Header className="App-header"></Header>
+      <Header className="container"></Header>
       <main>{children}</main>
       <Footer></Footer>
     </>

@@ -18,6 +18,8 @@ const Login = (props) => {
       },
     });
     localStorage.setItem("token", response.data.token);
+    props.logIn();
+    props.updateUser(response.data.user);
     setEmail("");
     setPassword("");
     history.push("/");

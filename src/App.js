@@ -1,25 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 import { Switch, Route } from "react-router-dom";
 import Layout from "./components/layout";
 import Home from "./views/Home";
 import Login from "./views/Login";
-import NewPlant from "./views/Newplant";
+import Create from "./views/Create";
 import "./App.css";
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState({});
+
+  const logIn = () => {
+    setIsLoggedIn(!isLoggedIn);
+  };
+  const updateUser = (userObject) => {
+    setUser(userObject);
+  };
+
   return (
     <>
-      <Layout>
+      <Layout isLoggedIn={isLoggedIn} user={user}>
         <div className="container">
           <Switch>
             <Route exact path="/">
-              <Home />
+              <Home isLoggedIn={isLoggedIn} user={user} />
             </Route>
             <Route path="/login">
-              <Login />
+              <Login logIn={logIn} updateUser={updateUser} />
             </Route>
             <Route path="/create">
-              <NewPlant />
+              <Create />
             </Route>
           </Switch>
         </div>
