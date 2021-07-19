@@ -1,19 +1,48 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { NavLink, useHistory } from "react-router-dom";
+import axios from "axios";
 import "../App.css";
 import "./header.css";
 
-function header() {
+const Header = (props) => {
+  const [loggedIn, setLoggedIn] = useState(props.isLoggedIn);
+  useEffect(() => {
+    setLoggedIn(props.isLoggedIn);
+  }, props.isLoggedIn);
+  let history = useHistory();
+
+  const logout = async () => {
+    await axios({
+      method: "post",
+      url: "https://botanictracker-api.herokuapp.com/users/logout",
+      headers: { authorization: `Bearer ${localStorage.token}` },
+    });
+    props.setIsLoggedIn(false);
+    props.setUser({});
+    history.push("/");
+  };
+
   return (
     <div>
       <nav>
-        <h4>Botanic Tracker</h4>
+        <NavLink to="/" className="title">
+          Botanic Tracker
+        </NavLink>
         <NavLink to="/">Home</NavLink>
-        <NavLink to="/create">Create</NavLink>
-        <NavLink to="/login">Login</NavLink>
+
+        {!props.isLoggedIn ? (
+          <NavLink to="/login">Login</NavLink>
+        ) : (
+          <>
+            <NavLink to="/create">Create</NavLink>
+            <NavLink to="#" onClick={logout}>
+              Logout
+            </NavLink>
+          </>
+        )}
       </nav>
     </div>
   );
-}
+};
 
-export default header;
+export default Header;

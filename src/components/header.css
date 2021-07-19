@@ -3,9 +3,10 @@ nav {
   justify-content: flex-end;
   align-items: center;
 }
-nav > h4 {
+a.title {
   margin: 0 auto 0 0;
   padding: 0.5rem 0.5rem;
+  font-weight: bold;
 }
 a {
   text-decoration: none;
@@ -13,7 +14,4 @@ a {
 }
 a:visited {
   color: black;
-}
-a:firstchild {
-  color: rgb(197, 9, 9);
 }

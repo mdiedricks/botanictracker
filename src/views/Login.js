@@ -9,6 +9,8 @@ const Login = (props) => {
 
   const loginSubmit = async (e) => {
     e.preventDefault();
+    setEmail("");
+    setPassword("");
     const response = await axios({
       method: "post",
       url: "https://botanictracker-api.herokuapp.com/users/login",
@@ -17,11 +19,11 @@ const Login = (props) => {
         password,
       },
     });
+
     localStorage.setItem("token", response.data.token);
     props.logIn();
     props.updateUser(response.data.user);
-    setEmail("");
-    setPassword("");
+    props.setIsLoggedIn(true);
     history.push("/");
   };
   const emailHandler = (e) => {
@@ -30,6 +32,8 @@ const Login = (props) => {
   const passwordHandler = (e) => {
     setPassword(e.target.value);
   };
+
+  const changeHandler = (e) => {};
 
   return (
     <div>

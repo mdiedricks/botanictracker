@@ -1,13 +1,19 @@
 import React from "react";
-import Header from "./header";
-import Footer from "./footer";
+import Header from "./Header";
+import Footer from "./Footer";
 import "../App.css";
 
-function Layout({ children }) {
+function Layout(props) {
   return (
     <>
-      <Header className="container"></Header>
-      <main>{children}</main>
+      <Header
+        className="container"
+        isLoggedIn={props.isLoggedIn}
+        setIsLoggedIn={props.setIsLoggedIn}
+        user={props.user}
+        setUser={props.setUser}
+      ></Header>
+      <main>{props.children}</main>
       <Footer></Footer>
     </>
   );

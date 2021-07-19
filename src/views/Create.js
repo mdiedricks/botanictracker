@@ -3,9 +3,7 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 
 const Newplant = () => {
-  const [plantName, setPlantName] = useState("");
-  const [plantSpecies, setPlantSpecies] = useState("");
-  const [plantAge, setPlantAge] = useState("");
+  const [plantData, setPlantData] = useState({ name: "", species: "", age: 0 });
   let history = useHistory();
 
   const submitHandler = async (e) => {
@@ -13,50 +11,42 @@ const Newplant = () => {
     const res = await axios({
       method: "post",
       url: `https://botanictracker-api.herokuapp.com/plants/`,
-      data: {
-        name: plantName,
-        species: plantSpecies,
-        age: plantAge,
-      },
+      data: plantData,
       headers: { authorization: `Bearer ${localStorage.token}` },
     });
     console.log(res);
     history.push("/");
   };
-  const nameHandler = (e) => {
-    setPlantName(e.target.value);
-  };
-  const speciesHandler = (e) => {
-    setPlantSpecies(e.target.value);
-  };
-  const ageHandler = (e) => {
-    setPlantAge(e.target.value);
+
+  const changeHandler = (e) => {
+    const { name, value } = e.target;
+    setPlantData({ ...plantData, [name]: value });
   };
 
   return (
     <div>
-      <h3>Create a new plant!</h3>
+      <h3>Create a plant!</h3>
       <form>
-        <label>Plant Name</label>
+        <label>Name</label>
         <input
           type="text"
           name="name"
-          value={plantName}
-          onChange={nameHandler}
+          value={plantData.name}
+          onChange={changeHandler}
         ></input>
         <label>Species</label>
         <input
           type="text"
           name="species"
-          value={plantSpecies}
-          onChange={speciesHandler}
+          value={plantData.species}
+          onChange={changeHandler}
         ></input>
         <label>Age</label>
         <input
           type="text"
           name="age"
-          value={plantAge}
-          onChange={ageHandler}
+          value={plantData.age}
+          onChange={changeHandler}
         ></input>
         <button onClick={submitHandler}>Create</button>
       </form>

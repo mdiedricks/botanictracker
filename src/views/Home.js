@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../App.css";
+import Modal from "../components/Modal";
 
 const Home = (props) => {
   const [plants, setPlants] = useState([]);
+  const [isDelete, setIsDelete] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [patchPlant, setPatchPlant] = useState({});
 
   useEffect(() => {
     if (!props.isLoggedIn) {
@@ -24,14 +28,58 @@ const Home = (props) => {
     });
     setPlants(response.data);
   };
-
-  const deletePlant = (id) => {
-    //TODO show delete modal
-    console.log(id);
+  const deletePlant = async (id, uri) => {
+    console.log("Function:: deleting plant");
+    const res = await axios({
+      method: "delete",
+      url: uri + id,
+      headers: { authorization: `Bearer ${localStorage.token}` },
+    });
+    return res;
   };
-  const editPlant = (id) => {
-    //TODO show edit modal
-    console.log(id);
+  const updatePlant = async (plant, uri) => {
+    console.log("Function:: patching plant");
+    const res = await axios({
+      method: "patch",
+      url: uri + plant._id,
+      data: {
+        name: plant.name,
+        species: plant.species,
+        age: plant.age,
+      },
+      headers: { authorization: `Bearer ${localStorage.token}` },
+    });
+    return res;
+  };
+
+  const patchQuery = async (plant) => {
+    let url = "https://botanictracker-api.herokuapp.com/plants/";
+    let id = plant._id;
+
+    if (isDelete) {
+      const response = await deletePlant(id, url);
+      const newArr = plants.filter((plant) => plant._id !== response.data._id);
+      setPlants(newArr);
+      toggleModal();
+    } else {
+      await updatePlant(plant, url);
+      getPlants({ owner: props.user._id });
+      toggleModal();
+    }
+  };
+
+  const toggleModal = () => {
+    setShowModal(!showModal);
+  };
+  const handleDelete = (plant) => {
+    setIsDelete(true);
+    setPatchPlant(plant);
+    toggleModal();
+  };
+  const handlePatch = (plant) => {
+    setIsDelete(false);
+    setPatchPlant(plant);
+    toggleModal();
   };
 
   const plantsList = plants.map((plant) => (
@@ -39,8 +87,12 @@ const Home = (props) => {
       <h3>{plant.name}</h3>
       <p>{plant.species}</p>
       <p>{plant.age}</p>
-      <button onClick={() => deletePlant(plant._id)}>x</button>
-      <button onClick={() => editPlant(plant._id)}>e</button>
+      {props.isLoggedIn && (
+        <>
+          <button onClick={() => handleDelete(plant)}>x</button>
+          <button onClick={() => handlePatch(plant)}>e</button>
+        </>
+      )}
     </div>
   ));
 
@@ -56,6 +108,12 @@ const Home = (props) => {
           <ul>{plantsList}</ul>
         </div>
       </section>
+      <Modal
+        isDelete={isDelete}
+        patchPlant={patchPlant}
+        patchQuery={patchQuery}
+        toggleModal={toggleModal}
+      ></Modal>
     </div>
   );
 };
