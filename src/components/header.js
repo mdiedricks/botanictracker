@@ -1,14 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { NavLink, useHistory } from "react-router-dom";
 import axios from "axios";
 import "../App.css";
 import "./header.css";
 
 const Header = (props) => {
-  const [loggedIn, setLoggedIn] = useState(props.isLoggedIn);
-  useEffect(() => {
-    setLoggedIn(props.isLoggedIn);
-  }, props.isLoggedIn);
   let history = useHistory();
 
   const logout = async () => {
@@ -29,16 +25,13 @@ const Header = (props) => {
           Botanic Tracker
         </NavLink>
         <NavLink to="/">Home</NavLink>
-
+        {props.isLoggedIn && <NavLink to="/create">Create</NavLink>}
         {!props.isLoggedIn ? (
           <NavLink to="/login">Login</NavLink>
         ) : (
-          <>
-            <NavLink to="/create">Create</NavLink>
-            <NavLink to="#" onClick={logout}>
-              Logout
-            </NavLink>
-          </>
+          <NavLink to="#" onClick={logout}>
+            Logout
+          </NavLink>
         )}
       </nav>
     </div>

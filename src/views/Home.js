@@ -88,10 +88,10 @@ const Home = (props) => {
       <p>{plant.species}</p>
       <p>{plant.age}</p>
       {props.isLoggedIn && (
-        <>
-          <button onClick={() => handleDelete(plant)}>x</button>
-          <button onClick={() => handlePatch(plant)}>e</button>
-        </>
+        <button onClick={() => handleDelete(plant)}>x</button>
+      )}
+      {props.isLoggedIn && (
+        <button onClick={() => handlePatch(plant)}>e</button>
       )}
     </div>
   ));

@@ -31,6 +31,7 @@ const Newplant = () => {
         <input
           type="text"
           name="name"
+          required
           value={plantData.name}
           onChange={changeHandler}
         ></input>
@@ -38,6 +39,7 @@ const Newplant = () => {
         <input
           type="text"
           name="species"
+          required
           value={plantData.species}
           onChange={changeHandler}
         ></input>
@@ -46,6 +48,8 @@ const Newplant = () => {
           type="text"
           name="age"
           value={plantData.age}
+          min="0"
+          required
           onChange={changeHandler}
         ></input>
         <button onClick={submitHandler}>Create</button>

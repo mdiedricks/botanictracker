@@ -3,20 +3,18 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 
 const Login = (props) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [formData, setFormData] = useState({ email: "", password: "" });
   let history = useHistory();
 
   const loginSubmit = async (e) => {
     e.preventDefault();
-    setEmail("");
-    setPassword("");
+    setFormData({ email: "", password: "" });
     const response = await axios({
       method: "post",
       url: "https://botanictracker-api.herokuapp.com/users/login",
       data: {
-        email,
-        password,
+        email: formData.email,
+        password: formData.password,
       },
     });
 
@@ -26,14 +24,11 @@ const Login = (props) => {
     props.setIsLoggedIn(true);
     history.push("/");
   };
-  const emailHandler = (e) => {
-    setEmail(e.target.value);
-  };
-  const passwordHandler = (e) => {
-    setPassword(e.target.value);
-  };
 
-  const changeHandler = (e) => {};
+  const changeHandler = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
 
   return (
     <div>
@@ -44,8 +39,8 @@ const Login = (props) => {
           type="text"
           name="email"
           autoComplete="email"
-          value={email}
-          onChange={emailHandler}
+          value={formData.email}
+          onChange={changeHandler}
         />
 
         <label>Password</label>
@@ -53,8 +48,8 @@ const Login = (props) => {
           type="password"
           name="password"
           autoComplete="password"
-          value={password}
-          onChange={passwordHandler}
+          value={formData.password}
+          onChange={changeHandler}
         />
 
         <button onClick={loginSubmit}>Login</button>

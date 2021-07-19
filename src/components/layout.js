@@ -5,7 +5,7 @@ import "../App.css";
 
 function Layout(props) {
   return (
-    <>
+    <header>
       <Header
         className="container"
         isLoggedIn={props.isLoggedIn}
@@ -15,7 +15,7 @@ function Layout(props) {
       ></Header>
       <main>{props.children}</main>
       <Footer></Footer>
-    </>
+    </header>
   );
 }
 
