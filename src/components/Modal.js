@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-function Modal(props) {
+const Modal = (props) => {
   const [isDelete, setIsDelete] = useState(false);
   const [plantObj, setPlantObj] = useState({});
 
@@ -53,6 +53,6 @@ function Modal(props) {
   );
 
   return <div className="screen">{isDelete ? deleteModal : editModal}</div>;
-}
+};
 
 export default Modal;

@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Switch, Route } from "react-router-dom";
 import Layout from "./components/Layout";
 import Home from "./views/Home";
-// import Explore from "./views/Explore";
 import Login from "./views/Login";
 import Create from "./views/Create";
 import "./App.css";
