@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { Switch, Route } from "react-router-dom";
-import Layout from "./components/Layout";
+
 import Home from "./views/Home";
 import Login from "./views/Login";
 import Create from "./views/Create";
+import Layout from "./components/Layout";
 import "./App.css";
 
 function App() {
