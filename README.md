@@ -27,7 +27,9 @@ This project is in it's early stages as I build out the day-to-day functionality
 
 #### Work to follow
 
-- [x] Flesh-out a mobile friendly frontend - the webapp will need to be used on mobile
+- [x] Build out basic frontend functionality - CRUD plants, user auth
+- [ ] Flex out website CSS - custom SASS or Material UI
+- [ ] Flesh out a mobile friendly frontend - the webapp will need to be used on mobile
 - [ ] Develop embedded device for manually reading soil moisture and sending it to the DB for a specific plant
 - [ ] Develop embedded devices to collect daily environmental data, and periodically send it to DB
 

@@ -5,7 +5,7 @@ import Home from "./views/Home";
 import Login from "./views/Login";
 import Create from "./views/Create";
 import Layout from "./components/Layout";
-import "./App.css";
+import "./App.scss";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
