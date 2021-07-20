@@ -1,8 +1,8 @@
 import React from "react";
 import { NavLink, useHistory } from "react-router-dom";
 import axios from "axios";
-import "../App.scss";
-import "./Header.scss";
+import "../App.css";
+import "./Header.css";
 
 const Header = (props) => {
   let history = useHistory();
