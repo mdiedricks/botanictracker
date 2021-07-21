@@ -1,21 +1,20 @@
 import React from "react";
+
 import Header from "./Header";
 import Footer from "./Footer";
-import "../App.css";
 
 const Layout = (props) => {
   return (
-    <header>
+    <>
       <Header
-        className="container"
         isLoggedIn={props.isLoggedIn}
         setIsLoggedIn={props.setIsLoggedIn}
         user={props.user}
         setUser={props.setUser}
-      ></Header>
-      <main>{props.children}</main>
-      <Footer></Footer>
-    </header>
+      />
+      <div className={"content"}>{props.children}</div>
+      <Footer />
+    </>
   );
 };
 

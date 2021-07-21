@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "../App.css";
-import Modal from "../components/Modal";
+import Plant from "../components/Plant";
 
 const Home = (props) => {
   const [plants, setPlants] = useState([]);
@@ -82,39 +81,39 @@ const Home = (props) => {
     toggleModal();
   };
 
-  const plantsList = plants.map((plant) => (
-    <div key={plant._id} className="card">
-      <h3>{plant.name}</h3>
-      <p>{plant.species}</p>
-      <p>{plant.age}</p>
-      {props.isLoggedIn && (
-        <button onClick={() => handleDelete(plant)}>x</button>
-      )}
-      {props.isLoggedIn && (
-        <button onClick={() => handlePatch(plant)}>e</button>
-      )}
-    </div>
-  ));
+  const getPlantCard = (plantObj) => {
+    return (
+      <Plant
+        plant={plantObj}
+        handleDelete={handleDelete}
+        handlePatch={handlePatch}
+        loggedInStatus={props.isLoggedIn}
+      />
+    );
+  };
 
   return (
-    <div>
-      <section className="hero">
-        <h1>"Track your plants!"</h1>
+    <main className={"container"}>
+      {props.isLoggedIn ? (
+        <h1>Explore your plants</h1>
+      ) : (
+        <h1>Explore all plants</h1>
+      )}
+
+      <section className={"grid-cards"}>
+        {plants.map((plant) => getPlantCard(plant))}
       </section>
 
-      <section className="hero">
-        <h3>Your plants</h3>
-        <div className="plants">
-          <ul>{plantsList}</ul>
-        </div>
-      </section>
-      <Modal
-        isDelete={isDelete}
-        patchPlant={patchPlant}
-        patchQuery={patchQuery}
-        toggleModal={toggleModal}
-      ></Modal>
-    </div>
+      {showModal && (
+        <section
+          className={"modal"}
+          isDelete={isDelete}
+          patchPlant={patchPlant}
+          patchQuery={patchQuery}
+          toggleModal={toggleModal}
+        ></section>
+      )}
+    </main>
   );
 };
 

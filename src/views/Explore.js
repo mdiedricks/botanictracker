@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "../App.css";
-import Modal from "../components/Modal";
 
 const Explore = (props) => {
   const [plants, setPlants] = useState([]);
@@ -52,7 +50,7 @@ const Explore = (props) => {
   ));
 
   return (
-    <div>
+    <main className={"container"}>
       <section className="hero">
         <h1>"Track your plants!"</h1>
       </section>
@@ -63,8 +61,8 @@ const Explore = (props) => {
           <ul>{plantsList}</ul>
         </div>
       </section>
-      <Modal deleteItem={deleteItem}></Modal>
-    </div>
+      <section className={"modal"} deleteItem={deleteItem}></section>
+    </main>
   );
 };
 

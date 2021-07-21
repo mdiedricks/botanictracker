@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Button from "@material-ui/core/Button";
 
 const Modal = (props) => {
   const [isDelete, setIsDelete] = useState(false);
@@ -47,8 +48,20 @@ const Modal = (props) => {
         value={plantObj.age}
         onChange={changeHandler}
       ></input>
-      <button onClick={() => props.patchQuery(plantObj)}>Submit</button>
-      <button onClick={() => props.toggleModal}>Cancel</button>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={() => props.patchQuery(plantObj)}
+      >
+        Submit
+      </Button>
+      <Button
+        variant="contained"
+        color="secondary"
+        onClick={() => props.toggleModal}
+      >
+        Cancel
+      </Button>
     </section>
   );
 

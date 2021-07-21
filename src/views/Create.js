@@ -24,7 +24,7 @@ const Create = () => {
   };
 
   return (
-    <div>
+    <main className={"container"}>
       <h3>Create a plant!</h3>
       <form>
         <label>Name</label>
@@ -54,7 +54,7 @@ const Create = () => {
         ></input>
         <button onClick={submitHandler}>Create</button>
       </form>
-    </div>
+    </main>
   );
 };
 
