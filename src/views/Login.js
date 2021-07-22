@@ -56,13 +56,39 @@ const Login = (props) => {
     loginForm ? setLoginForm(false) : setLoginForm(true);
   };
 
+  const loginText = () => {
+    return (
+      <>
+        <h2>Login</h2>
+        <p>
+          Haven't signed up yet?{" "}
+          <span className={"form-toggle-btn"} onClick={formToggler}>
+            Sign up!
+          </span>
+        </p>
+      </>
+    );
+  };
+  const signupText = () => {
+    return (
+      <>
+        <h2>Sign up to Botanic Tracker</h2>
+        <p>
+          Already have an account?{" "}
+          <span className={"form-toggle-btn"} onClick={formToggler}>
+            Sign in
+          </span>
+        </p>
+      </>
+    );
+  };
+
   return (
-    <main className={"container content"}>
-      <div className={"form-toggle"}>
-        <button onClick={formToggler}>Login</button>
-        <button onClick={formToggler}>Sign Up</button>
-      </div>
+    <main className={"container content center"}>
       <form>
+        <div className={"form-title"}>
+          {loginForm ? loginText() : signupText()}
+        </div>
         {!loginForm && <label>Name</label>}
         {!loginForm && (
           <input
@@ -89,7 +115,6 @@ const Login = (props) => {
           value={formData.password}
           onChange={changeHandler}
         />
-
         {loginForm ? (
           <button className={"btn--prim btn--lrg"} onClick={loginSubmit}>
             Login

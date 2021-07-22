@@ -12,7 +12,7 @@ const Layout = (props) => {
         user={props.user}
         setUser={props.setUser}
       />
-      <div className={"content"}>{props.children}</div>
+      <div className={"main-wrap"}>{props.children}</div>
       <Footer />
     </>
   );

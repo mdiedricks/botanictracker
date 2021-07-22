@@ -1,4 +1,5 @@
 import React from "react";
+import { MdModeEdit, MdDelete, MdInfoOutline } from "react-icons/md";
 
 const Plant = (props) => {
   const { plant, handleDelete, handlePatch, loggedInStatus } = props;
@@ -6,28 +7,14 @@ const Plant = (props) => {
   return (
     <div className={"card"}>
       <div className={"card-content"}>
-        <span className={"type-sec"}>{plant.age} yrs</span>
         <h3>{plant.name}</h3>
         <p>{plant.species}</p>
+        <p className={"type-sec"}>{plant.age} yrs</p>
       </div>
       <div className={"card-actions"}>
-        {/* <button className={"btn--sec"}>Info</button> */}
-        {loggedInStatus && (
-          <button
-            className={"btn--sec btn--sml"}
-            onClick={() => handlePatch(plant)}
-          >
-            Edit
-          </button>
-        )}
-        {loggedInStatus && (
-          <button
-            className={"btn--sec btn--sml"}
-            onClick={() => handleDelete(plant)}
-          >
-            Delete
-          </button>
-        )}
+        <MdInfoOutline />
+        {loggedInStatus && <MdModeEdit onClick={() => handlePatch(plant)} />}
+        {loggedInStatus && <MdDelete onClick={() => handleDelete(plant)} />}
       </div>
     </div>
   );

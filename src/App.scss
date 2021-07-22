@@ -1,18 +1,13 @@
 // * Colour
-$base-col: #01cd74;
-$sec-col: #ff4e00;
-$base-blk: #1c2721;
-$base-wht: #f2fff5;
-$sec-blk: #686e6a;
-$ter-col: #f8f8f8;
-
 $tx-br: #389c63;
 $tx-bd: #ff4e00;
-$tx-pa: #f5f7f6;
 $tx-ng: #1c2721;
-$tx-tn: #686e6a;
+$tx-g1: #f5f7f6;
+$tx-g2: #e9e9e9;
+$tx-gm: #c0c0c0;
+$tx-gd: #a8a8a8;
 
-// * Typography
+// * TYPE
 h1,
 h2,
 h3,
@@ -23,10 +18,9 @@ p,
 span {
   color: $tx-ng;
   font-family: "Rubik", sans-serif;
+  margin-top: 0rem;
 }
-.type-sec {
-  color: $tx-tn;
-}
+
 a {
   color: $tx-br;
   font-family: "Rubik", sans-serif;
@@ -35,8 +29,21 @@ a {
     color: $tx-bd;
   }
 }
+label {
+  font-family: "Rubik", sans-serif;
+}
+button {
+  border: none;
+  border-radius: 0.5rem;
+  font-family: "Rubik", sans-serif;
+}
 
-// * Layout
+// * LAYOUT
+.site-wrap {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
 .container {
   margin: 0 auto;
   max-width: 100vw;
@@ -54,6 +61,11 @@ a {
     max-width: 1200px;
   }
 }
+.center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 nav {
   padding: 0.8rem 0;
   display: flex;
@@ -61,15 +73,15 @@ nav {
   align-items: center;
   a,
   span {
-    color: $tx-pa;
+    color: $tx-g1;
     &:hover {
-      color: $tx-pa;
+      color: $tx-g1;
     }
   }
   .nav-link {
     padding-left: 0.5rem;
     &:hover {
-      color: $tx-bd;
+      text-decoration: underline;
     }
   }
 }
@@ -84,26 +96,30 @@ nav {
     font-size: 1.2rem;
   }
 }
-.navbar {
+.nav-wrap {
   background-color: $tx-br;
+  height: 48px;
 }
-.content {
-  min-height: calc(100vh - 88px);
+.main-wrap {
+  padding-top: 1rem;
+  margin-bottom: auto;
+  //   min-height: calc(100vh - 90px); // 90 = 48nav + 40foot + 1pxpad-top
 }
 footer {
   span {
     color: $tx-br;
   }
 }
-.footer {
+.footer-wrap {
+  margin-top: auto;
   height: 40px;
   display: flex;
   align-items: center;
 }
 .grid-cards {
   display: grid;
-  column-gap: 0.5rem;
-  row-gap: 0.5rem;
+  column-gap: 1rem;
+  row-gap: 1rem;
   grid-template-columns: 1fr 1fr;
   @media (min-width: 600px) {
     grid-template-columns: 1fr 1fr 1fr;
@@ -116,80 +132,104 @@ footer {
   }
 }
 form {
-  background-color: $tx-pa;
-  padding: 2rem 4rem;
+  background-color: $tx-g1;
+  padding: 3rem 4rem 4rem;
   display: flex;
   flex-direction: column;
+  min-width: 350px;
   label {
     margin: 0.5rem 0 0.5rem 0;
+    font-weight: bold;
   }
   input {
-    border: none;
-    height: 2rem;
-    border: 2px solid $tx-pa;
+    padding: 0.2rem 0.5rem;
     outline: none;
+    border: none;
+    border-radius: 3px;
+    height: 2rem;
+    border: 1px solid $tx-gm;
+    margin-bottom: 0.5rem;
     &:focus {
       border: 2px solid $tx-br;
     }
+    font-family: "Rubik", sans-serif;
   }
   button {
     margin-top: 2rem;
   }
 }
-.form-toggle {
-  padding: 1rem;
+.form-title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1rem;
 }
-// * Components
+.form-toggle-btn {
+  cursor: pointer;
+  color: $tx-br;
+  text-decoration: underline;
+}
+
+// * COMPONENTS
 .card {
   padding: 1rem;
   border-radius: 3px;
-  background-color: $tx-pa;
+  background-color: $tx-g1;
 }
 .card-content {
-  h3 {
-    margin-top: 0.5rem;
+  p {
     margin-bottom: 0.5rem;
   }
+  h3 {
+    margin-bottom: 1rem;
+  }
+  margin-bottom: 1rem;
 }
 .card-actions {
   display: flex;
-  justify-content: flex-start;
-  //   align-items: flex-start;
-}
-.btn--prim {
-  border: none;
-  border-radius: 3px;
-  background-color: $tx-br;
-  color: $tx-pa;
-  font-family: "Rubik", sans-serif;
-  &:hover {
-    border: 1px solid $tx-br;
-    background-color: $tx-pa;
+  justify-content: flex-end;
+  svg {
+    margin-left: 0.5rem;
     color: $tx-br;
+    &:hover {
+      color: $tx-bd;
+    }
+  }
+}
+
+.btn--prim {
+  background-color: $tx-br;
+  border: 1px solid $tx-br;
+  color: $tx-g1;
+  &:hover {
+    background-color: $tx-g1;
+    color: $tx-br;
+    border: 1px solid $tx-br;
   }
 }
 .btn--sec {
-  border: 1px solid $tx-br;
-  border-radius: 3px;
-  background-color: $tx-pa;
+  background-color: $tx-g1;
   color: $tx-br;
-  font-family: "Rubik", sans-serif;
+  border: 1px solid $tx-br;
   &:hover {
-    border: 1px solid $tx-pa;
     background-color: $tx-br;
-    color: $tx-pa;
+    color: $tx-g1;
+    border: 1px solid $tx-g1;
   }
 }
-.btn--sml {
-  padding: 0.2rem 0.5rem;
-  min-width: 3.5rem;
-  font-size: 0.8rem;
-  margin-right: 0.5rem;
-}
-.btn--lrg {
-  padding: 0.5rem 0.8rem;
+.btn--lg {
+  padding: 0.7rem 0.7rem;
   min-width: 4rem;
 }
+.btn--sm {
+  padding: 0.5rem 0.5rem;
+  min-width: 3rem;
+  font-size: 0.9rem;
+}
+.btn--sq {
+  padding: 0.3rem 0.3rem;
+  font-size: 0.9rem;
+}
 .modal {
-  background-color: $tx-pa;
+  background-color: $tx-g1;
 }

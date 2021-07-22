@@ -18,7 +18,7 @@ const Header = (props) => {
   };
 
   return (
-    <div className={"navbar"}>
+    <div className={"nav-wrap"}>
       <nav className={"container"}>
         <NavLink to="/" className={"nav-logo"}>
           <RiPlantLine size="1.4rem" />

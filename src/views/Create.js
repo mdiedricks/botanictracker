@@ -24,9 +24,11 @@ const Create = () => {
   };
 
   return (
-    <main className={"container"}>
-      <h3>Create a plant!</h3>
+    <main className={"container content center"}>
       <form>
+        <div className={"form-title"}>
+          <h2>Create a plant!</h2>
+        </div>
         <label>Name</label>
         <input
           type="text"
@@ -52,7 +54,9 @@ const Create = () => {
           required
           onChange={changeHandler}
         ></input>
-        <button onClick={submitHandler}>Create</button>
+        <button className={"btn--prim btn--lrg"} onClick={submitHandler}>
+          Create
+        </button>
       </form>
     </main>
   );
