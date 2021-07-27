@@ -10,10 +10,10 @@ export const createPlant = async (plantData) => {
       data: plantData,
       headers: { authorization: `Bearer ${localStorage.token}` },
     });
-    if (res.status !== 200) {
+    if (res.status !== 201) {
       throw new Error(res.data.msg);
     }
-    return res;
+    return res.data;
   } catch (error) {
     return { msg: error.message };
   }

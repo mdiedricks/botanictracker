@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { createPlant } from "../utils/plants";
 import { useDispatch } from "react-redux";
-import { addPlant } from "../redux/plantsSlice";
+import { addPlantAsync } from "../redux/plantsSlice";
 
 const Create = () => {
   const [plantData, setPlantData] = useState({
@@ -15,11 +14,8 @@ const Create = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    const res = await createPlant(plantData);
-    dispatch(
-      addPlant({ _id: "23423", name: "Juniper", species: "Juni", age: 5 })
-    );
-    console.log(res);
+    console.log("Handler :: creating plant");
+    dispatch(addPlantAsync(plantData));
     history.push("/");
   };
 

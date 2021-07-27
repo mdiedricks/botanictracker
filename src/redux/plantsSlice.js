@@ -1,18 +1,41 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { getPlants } from "../utils/plants";
+import { getPlants, createPlant } from "../utils/plants";
 
 export const getPlantsAsync = createAsyncThunk(
   "plants/getPlantsAsync",
   async () => {
+    console.log("Thunk :: gettings plants");
     const res = await getPlants({ _id: "" });
     console.log(res);
-    if (res.length) {
+    if (!res.msg) {
       const plants = res;
       return { plants };
     } else {
       console.log("res is NOT ok");
+      return { res };
     }
   }
+);
+export const addPlantAsync = createAsyncThunk(
+  "plants/addPlantAsync",
+  async (payload) => {
+    console.log("Thunk :: creating plant");
+    const res = await createPlant({
+      name: payload.name,
+      species: payload.species,
+      age: payload.age,
+    });
+    if (!res.msg) {
+      const plant = res;
+      return { plant };
+    } else {
+      return { res };
+    }
+  }
+);
+export const deletePlantAsync = createAsyncThunk(
+  "/plants/deletePlantAsync",
+  async () => {}
 );
 
 const initialState = [];
@@ -54,7 +77,12 @@ const plantSlice = createSlice({
   },
   extraReducers: {
     [getPlantsAsync.fulfilled]: (state, action) => {
+      console.log("Fetched data success");
       return action.payload.plants;
+    },
+    [addPlantAsync.fulfilled]: (state, action) => {
+      console.log("Plant created");
+      state.push(action.payload.plant);
     },
   },
 });
