@@ -1,19 +1,24 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { useHistory } from "react-router-dom";
+import { createPlant } from "../utils/plants";
+import { useDispatch } from "react-redux";
+import { addPlant } from "../redux/plantsSlice";
 
 const Create = () => {
-  const [plantData, setPlantData] = useState({ name: "", species: "", age: 0 });
+  const [plantData, setPlantData] = useState({
+    name: "",
+    species: "",
+    age: 0,
+  });
   let history = useHistory();
+  const dispatch = useDispatch();
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    const res = await axios({
-      method: "post",
-      url: `https://botanictracker-api.herokuapp.com/plants/`,
-      data: plantData,
-      headers: { authorization: `Bearer ${localStorage.token}` },
-    });
+    const res = await createPlant(plantData);
+    dispatch(
+      addPlant({ _id: "23423", name: "Juniper", species: "Juni", age: 5 })
+    );
     console.log(res);
     history.push("/");
   };

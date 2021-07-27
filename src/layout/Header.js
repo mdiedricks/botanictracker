@@ -1,20 +1,25 @@
 import React from "react";
 import { NavLink, useHistory } from "react-router-dom";
-import axios from "axios";
-import { RiPlantLine } from "react-icons/ri";
+import { useDispatch } from "react-redux";
+import { clearUser } from "../redux/userSlice";
+import { useSelector } from "react-redux";
+import { RiPlantLine } from "react-icons/ri"; //RiAccountCircleLine
+import { userLogout, clearLocalStorage } from "../utils/users";
 
 const Header = (props) => {
+  const user = useSelector((state) => state.user);
   const history = useHistory();
+  const dispatch = useDispatch();
+  const { toggleLogin } = props;
 
   const logout = async () => {
-    await axios({
-      method: "post",
-      url: "https://botanictracker-api.herokuapp.com/users/logout",
-      headers: { authorization: `Bearer ${localStorage.token}` },
-    });
-    props.setIsLoggedIn(false);
-    props.setUser({});
-    history.push("/");
+    try {
+      await userLogout();
+      dispatch(clearUser());
+      clearLocalStorage();
+      toggleLogin();
+      history.push("/");
+    } catch (error) {}
   };
 
   return (
@@ -27,12 +32,13 @@ const Header = (props) => {
         <NavLink to="/" className={"nav-link"}>
           Home
         </NavLink>
-        {props.isLoggedIn && (
+        {/* {user.name && <span>{user.name}</span>} */}
+        {user.name && (
           <NavLink to="/create" className={"nav-link"}>
             Create
           </NavLink>
         )}
-        {!props.isLoggedIn ? (
+        {!user.name ? (
           <NavLink to="/login" className={"nav-link"}>
             Login
           </NavLink>
@@ -41,6 +47,9 @@ const Header = (props) => {
             Logout
           </NavLink>
         )}
+        {/* <NavLink to="#" className={"nav-logo"}>
+          <RiAccountCircleLine />
+        </NavLink> */}
       </nav>
     </div>
   );

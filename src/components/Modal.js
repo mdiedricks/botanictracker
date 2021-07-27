@@ -1,32 +1,46 @@
-import React, { useState, useEffect } from "react";
-import Button from "@material-ui/core/Button";
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import {
+  updatePlantName,
+  updatePlantSpecies,
+  updatePlantAge,
+  deletePlant,
+} from "../redux/plantsSlice";
 
-const Modal = (props) => {
-  const [isDelete, setIsDelete] = useState(false);
-  const [plantObj, setPlantObj] = useState({});
-
-  useEffect(() => {
-    setIsDelete(props.isDelete);
-  }, [props.isDelete]);
-  useEffect(() => {
-    setPlantObj(props.patchPlant);
-  }, [props.patchPlant]);
+const Modal = ({ plant, isDelete, toggleModal }) => {
+  const [plantObj, setPlantObj] = useState(plant);
+  const history = useHistory();
+  const dispatch = useDispatch();
 
   const changeHandler = (e) => {
     const { name, value } = e.target;
     setPlantObj({ ...plantObj, [name]: value });
   };
 
+  const confirmUpdate = async () => {
+    dispatch(updatePlantName({ _id: plantObj._id, name: plantObj.name }));
+    dispatch(
+      updatePlantSpecies({ _id: plantObj._id, species: plantObj.species })
+    );
+    dispatch(updatePlantAge({ _id: plantObj._id, age: plantObj.age }));
+    history.push("/");
+  };
+  const confirmDelete = async () => {
+    dispatch(deletePlant({ _id: plantObj._id }));
+    history.push("/");
+  };
+
   const deleteModal = (
-    <section>
-      <h2>Are you sure you want to delete this plant?</h2>
-      <button onClick={() => props.patchQuery(plantObj)}>Yes</button>
-      <button onClick={() => props.toggleModal}>No</button>
-    </section>
+    <form>
+      <h2>Are you sure you want to delete {plantObj.name}?</h2>
+      <button onClick={() => confirmDelete}>Yes</button>
+      <button onClick={() => toggleModal}>No</button>
+    </form>
   );
   const editModal = (
-    <section>
-      <h2>Edit props.</h2>
+    <form>
+      <h2>Edit {plant.name}</h2>
       <label>Name</label>
       <input
         type="text"
@@ -41,31 +55,30 @@ const Modal = (props) => {
         value={plantObj.species}
         onChange={changeHandler}
       ></input>
-      <label>age</label>
+      <label>Age</label>
       <input
         type="number"
         name="age"
         value={plantObj.age}
         onChange={changeHandler}
       ></input>
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={() => props.patchQuery(plantObj)}
-      >
-        Submit
-      </Button>
-      <Button
-        variant="contained"
-        color="secondary"
-        onClick={() => props.toggleModal}
-      >
-        Cancel
-      </Button>
-    </section>
+      <div className={"form-btn-aside"}>
+        <button className={"btn--prim btn--lg"} onClick={confirmUpdate}>
+          Submit
+        </button>
+        <button className={"btn--sec btn--lg"} onClick={toggleModal}>
+          Cancel
+        </button>
+      </div>
+    </form>
   );
 
-  return <div className="screen">{isDelete ? deleteModal : editModal}</div>;
+  return (
+    <div className="screen">
+      {isDelete && plantObj && deleteModal}
+      {!isDelete && plantObj && editModal}
+    </div>
+  );
 };
 
 export default Modal;

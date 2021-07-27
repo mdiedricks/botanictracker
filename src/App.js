@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Switch, Route } from "react-router-dom";
 
 import Layout from "./layout/Layout";
@@ -7,36 +7,17 @@ import Login from "./views/Login";
 import Create from "./views/Create";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [user, setUser] = useState({});
-
-  const logIn = () => {
-    setIsLoggedIn(!isLoggedIn);
-  };
-  const updateUser = (userObject) => {
-    setUser(userObject);
-  };
-
   return (
-    <Layout
-      isLoggedIn={isLoggedIn}
-      setIsLoggedIn={setIsLoggedIn}
-      user={user}
-      setUser={setUser}
-    >
+    <Layout>
       <Switch>
         <Route exact path="/">
-          <Home isLoggedIn={isLoggedIn} user={user} />
+          <Home />
         </Route>
         <Route path="/create">
-          <Create isLoggedIn={isLoggedIn} user={user} />
+          <Create />
         </Route>
         <Route path="/login">
-          <Login
-            logIn={logIn}
-            updateUser={updateUser}
-            setIsLoggedIn={setIsLoggedIn}
-          />
+          <Login />
         </Route>
       </Switch>
     </Layout>

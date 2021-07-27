@@ -1,8 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 import { MdModeEdit, MdDelete, MdInfoOutline } from "react-icons/md";
+import Modal from "../components/Modal";
 
 const Plant = (props) => {
-  const { plant, handleDelete, handlePatch, loggedInStatus } = props;
+  const [isDelete, setIsDelete] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const { plant } = props;
+
+  const handleDelete = () => {
+    setIsDelete(true);
+    toggleModal();
+  };
+  const handlePatch = () => {
+    setIsDelete(false);
+    toggleModal();
+  };
+
+  const toggleModal = () => {
+    setShowModal(!showModal);
+  };
+
+  const getPlantModal = (plant) => {
+    return (
+      <Modal isDelete={isDelete} plant={plant} toggleModal={toggleModal} />
+    );
+  };
 
   return (
     <div className={"card"}>
@@ -13,9 +35,12 @@ const Plant = (props) => {
       </div>
       <div className={"card-actions"}>
         <MdInfoOutline />
-        {loggedInStatus && <MdModeEdit onClick={() => handlePatch(plant)} />}
-        {loggedInStatus && <MdDelete onClick={() => handleDelete(plant)} />}
+        {true && <MdModeEdit onClick={() => handlePatch(plant)} />}
+        {true && <MdDelete onClick={() => handleDelete(plant)} />}
       </div>
+      {showModal && (
+        <section className={"modal-screen"}>{getPlantModal(plant)}</section>
+      )}
     </div>
   );
 };

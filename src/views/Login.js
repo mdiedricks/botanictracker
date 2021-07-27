@@ -1,30 +1,31 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import {
+  updateUserId,
+  updateUserName,
+  updateUserEmail,
+} from "../redux/userSlice";
+import { useDispatch } from "react-redux";
+import { userLogin, populateLocalStorage } from "../utils/users";
 
 const Login = (props) => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-  });
+  const [formData, setFormData] = useState({ email: "", password: "" });
   const [loginForm, setLoginForm] = useState(true);
+  const [errorObject, setErrorObject] = useState({});
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const loginSubmit = async (e) => {
     e.preventDefault();
-    const response = await axios({
-      method: "post",
-      url: "https://botanictracker-api.herokuapp.com/users/login",
-      data: {
-        email: formData.email,
-        password: formData.password,
-      },
-    });
-    localStorage.setItem("token", response.data.token);
-    props.logIn();
-    props.updateUser(response.data.user);
-    props.setIsLoggedIn(true);
+    const res = await userLogin(formData);
+    if (res.msg) {
+      setErrorObject({ ...errorObject, msg: res.msg });
+    }
+    dispatch(updateUserId({ _id: res.user._id }));
+    dispatch(updateUserName({ name: res.user.name }));
+    dispatch(updateUserEmail({ email: res.user.email }));
+    populateLocalStorage(res);
     history.push("/");
   };
 
@@ -55,7 +56,6 @@ const Login = (props) => {
   const formToggler = () => {
     loginForm ? setLoginForm(false) : setLoginForm(true);
   };
-
   const loginText = () => {
     return (
       <>
@@ -116,14 +116,17 @@ const Login = (props) => {
           onChange={changeHandler}
         />
         {loginForm ? (
-          <button className={"btn--prim btn--lrg"} onClick={loginSubmit}>
+          <button className={"btn--prim btn--lg"} onClick={loginSubmit}>
             Login
           </button>
         ) : (
-          <button className={"btn--prim btn--lrg"} onClick={signupSubmit}>
+          <button className={"btn--prim btn--lg"} onClick={signupSubmit}>
             Signup
           </button>
         )}
+        <div className={"error"}>
+          {errorObject.msg && <p className={"error-text"}>{errorObject.msg}</p>}
+        </div>
       </form>
     </main>
   );
